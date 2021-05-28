@@ -16,6 +16,18 @@
     - reload systemd configuration
     - restart cloud-sql-proxy
 
+- name: Place authentication json on host
+  template:
+    src: auth.json.j2
+    dest: "{{ cloud_sql_proxy_credential_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd configuration
+    - restart cloud-sql-proxy
+  when: cloud_sql_proxy_json_data is defined
+
 - name: Enable cloud-sql-proxy service
   service:
     name: cloud-sql-proxy.service
