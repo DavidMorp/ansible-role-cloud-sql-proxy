@@ -5,6 +5,25 @@
     dest: "{{ cloud_sql_proxy_install_path }}"
     mode: 0755
 
+- name: "Ensure {{ cloud_sql_proxy_credential_file }} dir exists"
+  file:
+    path: "{{ cloud_sql_proxy_credential_file }}"
+    state: directory
+  when:
+    - cloud_sql_proxy_json_data is defined
+    - cloud_sql_proxy_credential_file is defined
+
+- name: Place authentication json on host
+  template:
+    src: auth.json.j2
+    dest: "{{ cloud_sql_proxy_credential_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - cloud_sql_proxy_json_data is defined
+    - cloud_sql_proxy_credential_file is defined
+
 - name: Configure cloud-sql-proxy service
   template:
     src: cloud-sql-proxy.service.j2
@@ -15,18 +34,6 @@
   notify:
     - reload systemd configuration
     - restart cloud-sql-proxy
-
-- name: Place authentication json on host
-  template:
-    src: auth.json.j2
-    dest: "{{ cloud_sql_proxy_credential_file }}"
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - reload systemd configuration
-    - restart cloud-sql-proxy
-  when: cloud_sql_proxy_json_data is defined
 
 - name: Enable cloud-sql-proxy service
   service:
