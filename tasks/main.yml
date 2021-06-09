@@ -5,24 +5,24 @@
     dest: "{{ cloud_sql_proxy_install_path }}"
     mode: 0755
 
-- name: "Ensure {{ cloud_sql_proxy_credential_file }} dir exists"
+- name: "Ensure {{ cloud_sql_proxy_credential_dir }} dir exists"
   file:
-    path: "{{ cloud_sql_proxy_credential_file }}"
+    path: "{{ cloud_sql_proxy_credential_dir }}"
     state: directory
   when:
     - cloud_sql_proxy_json_data is defined
-    - cloud_sql_proxy_credential_file is defined
+    - cloud_sql_proxy_credential_dir is defined
 
 - name: Place authentication json on host
   template:
     src: auth.json.j2
-    dest: "{{ cloud_sql_proxy_credential_file }}"
+    dest: "{{ cloud_sql_proxy_credential_dir }}/auth.json"
     owner: root
     group: root
     mode: 0644
   when:
     - cloud_sql_proxy_json_data is defined
-    - cloud_sql_proxy_credential_file is defined
+    - cloud_sql_proxy_credential_dir is defined
   no_log: true
 
 - name: Configure cloud-sql-proxy service

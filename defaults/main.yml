@@ -10,7 +10,9 @@ cloud_sql_proxy_tcp_port:
 cloud_sql_proxy_socket_dir: /var/run/cloud-sql-proxy
 
 # When set, the value will be passed to the service's -credential_file argument when started
-cloud_sql_proxy_credential_file:
+# Example: /var/cloud-sql-proxy
+# The filename is 'auth.json'
+cloud_sql_proxy_credential_dir:
 
 # Where the proxy will be installed and run from
 cloud_sql_proxy_working_dir: /usr/local/bin
