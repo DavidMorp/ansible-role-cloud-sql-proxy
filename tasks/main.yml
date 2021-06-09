@@ -23,6 +23,7 @@
   when:
     - cloud_sql_proxy_json_data is defined
     - cloud_sql_proxy_credential_file is defined
+  no_log: true
 
 - name: Configure cloud-sql-proxy service
   template:
