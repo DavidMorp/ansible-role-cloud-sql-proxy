@@ -13,7 +13,7 @@ ExecStart={{ cloud_sql_proxy_install_path }} \
   -credential_file={{ cloud_sql_proxy_credential_dir }}/auth.json \
 {% endif %}
 {%if cloud_sql_proxy_tcp_port %}
-  -instances={{ cloud_sql_proxy_connection_name }}=tcp:{{ cloud_sql_proxy_tcp_port }}
+  -instances={{ cloud_sql_proxy_connection_name }}=tcp:localhost:{{ cloud_sql_proxy_tcp_port }}
 {% else %}
   -instances={{ cloud_sql_proxy_connection_name }}
 {% endif %}
