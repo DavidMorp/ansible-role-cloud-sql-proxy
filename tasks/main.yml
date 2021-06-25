@@ -40,3 +40,4 @@
   service:
     name: cloud-sql-proxy.service
     enabled: true
+    state: started
